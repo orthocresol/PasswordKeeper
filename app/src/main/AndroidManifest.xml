@@ -9,13 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordKeeper">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ViewItemActivity" />
+        <activity android:name=".GeneratorActivity" />
+        <activity android:name=".AddItemActivity" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
+
+
     </application>
 
 </manifest>
