@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:hint="Description"
+        android:gravity="center"
         android:maxLines="1"
         android:textColor="@color/text_color_dashboard"
         app:layout_constraintEnd_toEndOf="parent"

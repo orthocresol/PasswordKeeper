@@ -35,11 +35,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.jetbrains.annotations.NotNull;
 
 public class DashboardActivity extends AppCompatActivity {
-    Button btn_add_item;
+
     BottomNavigationView bottomNavigationView;
     FloatingActionButton btn_float_add_item;
-
-
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     CollectionReference entries;
@@ -48,10 +46,10 @@ public class DashboardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("item", "oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        setTitle("Logins");
         String nameToUse = user.getEmail();
         entries = db.collection(nameToUse);
 
@@ -84,19 +82,19 @@ public class DashboardActivity extends AppCompatActivity {
                         Intent intent = new Intent(DashboardActivity.this, GeneratorActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
-                        finish();
+                        //finish();
                         return true;
                     case R.id.btm_nav_search:
                         intent = new Intent(DashboardActivity.this, SearchActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
-                        finish();
+                        //finish();
                         return true;
                     case R.id.btm_nav_settings:
                         intent = new Intent(DashboardActivity.this, SettingsActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
-                        finish();
+                        //finish();
                         return true;
 
                 }
@@ -163,6 +161,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        bottomNavigationView.setSelectedItemId(R.id.btm_nav_myvault);
         Log.d("item", "onresume");
     }
 

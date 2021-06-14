@@ -62,9 +62,9 @@ public class SettingsActivity extends AppCompatActivity {
                         finish();
                         return true;
                     case R.id.btm_nav_myvault:
-                        intent = new Intent(SettingsActivity.this, DashboardActivity.class);
+                        /*intent = new Intent(SettingsActivity.this, DashboardActivity.class);
                         startActivity(intent);
-                        overridePendingTransition(0, 0);
+                        overridePendingTransition(0, 0);*/
                         finish();
                         return true;
 

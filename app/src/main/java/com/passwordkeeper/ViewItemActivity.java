@@ -32,6 +32,7 @@ public class ViewItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_item);
 
+        setTitle("View Item");
         name = findViewById(R.id.viewItemName);
         username = findViewById(R.id.viewItemUsername);
         password = findViewById(R.id.viewItemPassword);

@@ -58,6 +58,7 @@ public class GeneratorActivity extends AppCompatActivity {
 
         tv_char.setText(String.valueOf(minChar));
         tv_num.setText(String.valueOf(minNum));
+        tv_len.setText(String.valueOf(passwordLength));
 
         updatePassword();
 
@@ -200,13 +201,15 @@ public class GeneratorActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                Intent intent;
                 switch (item.getItemId()){
                     case R.id.btm_nav_generator:
                         return true;
                     case R.id.btm_nav_myvault:
+                        /*
                         Intent intent = new Intent(GeneratorActivity.this, DashboardActivity.class);
                         startActivity(intent);
-                        overridePendingTransition(0, 0);
+                        overridePendingTransition(0, 0);*/
                         finish();
                         return true;
                     case R.id.btm_nav_search:

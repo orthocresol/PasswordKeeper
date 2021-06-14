@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordKeeper">
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".ViewItemActivity" />
-        <activity android:name=".GeneratorActivity" />
-        <activity android:name=".AddItemActivity" />
+        <activity android:name=".GeneratorActivity"/>
+        <activity android:name=".AddItemActivity" android:parentActivityName=".DashboardActivity"/>
         <activity android:name=".DashboardActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">

@@ -39,7 +39,7 @@ public class PasswordGenerator {
                 current_length++;
             }
         }
-        for(int i = 0 ; current_length <= length ; i++){
+        for(int i = 0 ; current_length < length ; i++){
             password = password + (char)(random.nextInt(26) + 'a');
             current_length++;
         }
