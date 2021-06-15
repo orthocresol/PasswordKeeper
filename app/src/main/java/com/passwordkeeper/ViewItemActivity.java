@@ -73,7 +73,8 @@ public class ViewItemActivity extends AppCompatActivity {
     private void setViewItems() {
         Picasso.get()
                 .load("https://logo.clearbit.com/" + sUrl)
-                .placeholder(R.drawable.ic_baseline_web_24)
+                .placeholder(R.drawable.web_24)
+                .error(R.drawable.web_24)
                 .into(logo);
 
         name.setText(sName);

@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.BoringLayout;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
@@ -23,7 +25,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -32,6 +33,7 @@ public class SearchActivity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     CollectionReference entries = db.collection(user.getEmail());
     EntryAdapterForSearch adapter;
+    EntryAdapterForSearch2 adapter2;
     RecyclerView recyclerView;
 
     @Override
@@ -41,42 +43,50 @@ public class SearchActivity extends AppCompatActivity {
 
         setTitle("Search");
 
-        searchView = findViewById(R.id.search_searchview);
+        //searchView = findViewById(R.id.search_searchview);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.btm_nav_search);
 
         setNavigationBar();
-        searchViewListener();
+        //searchViewListener();
+        setupRecyclerView2();
 
         recyclerView = findViewById(R.id.search_recylerview);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.setAdapter(adapter2);
+        Log.d("first", "onCreate: ");
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        adapter = null;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recyclerView.setAdapter(adapter2);
     }
 
     private void searchViewListener() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //setupRecylerView(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                setupRecylerView(newText);
+                setupRecyclerView(newText);
                 return false;
             }
         });
     }
 
-    private void setupRecylerView(String newText) {
+    private void setupRecyclerView(String newText) {
         ArrayList<Item> array = new ArrayList<>();
         entries.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -114,6 +124,28 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    private void setupRecyclerView2(){
+        ArrayList<Item> array2 = new ArrayList<>();
+        entries.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Item item = documentSnapshot.toObject(Item.class);
+                            item.setId(documentSnapshot.getId());
+                            array2.add(item);
+                            Log.d("gggg", "onSuccess: " + array2.size());
+
+                        }
+                        adapter2 = new EntryAdapterForSearch2(SearchActivity.this, array2);
+                        recyclerView.setAdapter(adapter2);
+                        Log.d("first", "onSuccess: ");
+                    }
+                });
+        Log.d("ry", "setupRecyclerView2: " + array2.size());
+
+    }
+
     private void setNavigationBar() {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -144,5 +176,26 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_search, menu);
+        MenuItem searchItem = menu.findItem(R.id.search_searchIcon);
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter2.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
 }

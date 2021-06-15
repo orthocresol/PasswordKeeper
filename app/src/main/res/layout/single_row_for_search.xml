@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_single_row_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorSecondary"
+    android:layout_margin="6dp"
+    >
 
     <TextView
         android:id="@+id/single_row_search_name"
