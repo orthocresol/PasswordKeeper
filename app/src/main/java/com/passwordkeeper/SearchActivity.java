@@ -50,14 +50,14 @@ public class SearchActivity extends AppCompatActivity {
 
         setNavigationBar();
         //searchViewListener();
-        setupRecyclerView2();
+
 
         recyclerView = findViewById(R.id.search_recylerview);
+        setupRecyclerView2();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         recyclerView.setAdapter(adapter2);
-        Log.d("first", "onCreate: ");
 
     }
 
@@ -69,6 +69,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        setupRecyclerView2();
         recyclerView.setAdapter(adapter2);
     }
 
@@ -135,15 +136,12 @@ public class SearchActivity extends AppCompatActivity {
                             Item item = documentSnapshot.toObject(Item.class);
                             item.setId(documentSnapshot.getId());
                             array2.add(item);
-                            Log.d("gggg", "onSuccess: " + array2.size());
 
                         }
                         adapter2 = new EntryAdapterForSearch2(SearchActivity.this, array2);
                         recyclerView.setAdapter(adapter2);
-                        Log.d("first", "onSuccess: ");
                     }
                 });
-        Log.d("ry", "setupRecyclerView2: " + array2.size());
 
     }
 

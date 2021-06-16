@@ -3,7 +3,6 @@ package com.passwordkeeper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,7 +49,7 @@ public class EntryAdapter extends FirestoreRecyclerAdapter<Item, EntryAdapter.En
     @NotNull
     @Override
     public EntryHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dashboard_single_row_card,
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dashboard_card,
                 parent, false);
 
 
@@ -66,13 +65,13 @@ public class EntryAdapter extends FirestoreRecyclerAdapter<Item, EntryAdapter.En
 
         public EntryHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.dashboard_single_title);
-            description = itemView.findViewById(R.id.dashboard_single_description);
-            logo = itemView.findViewById(R.id.dashboard_single_imageview);
+            title = itemView.findViewById(R.id.dashboard_single_card_title);
+            description = itemView.findViewById(R.id.dashboard_single_card_description);
+            logo = itemView.findViewById(R.id.dashboard_single_card_imageview);
             //creation = itemView.findViewById(R.id.dashboard_creation);
-            launch = itemView.findViewById(R.id.dashboardLaunch);
-            copyUsername = itemView.findViewById(R.id.dashboardCopyUsername);
-            copyPassword = itemView.findViewById(R.id.dashboardCopyPassword);
+            launch = itemView.findViewById(R.id.dashboardCardLaunch);
+            copyUsername = itemView.findViewById(R.id.dashboardCardCopyUsername);
+            copyPassword = itemView.findViewById(R.id.dashboardCardCopyPassword);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
