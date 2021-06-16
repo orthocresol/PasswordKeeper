@@ -42,7 +42,7 @@ public class EntryAdapterForSearch2 extends RecyclerView.Adapter<EntryAdapterFor
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.single_row_for_search, parent, false);
+        View view = layoutInflater.inflate(R.layout.search_cardview, parent, false);
         return new ViewHolder(view);
     }
 
@@ -87,10 +87,10 @@ public class EntryAdapterForSearch2 extends RecyclerView.Adapter<EntryAdapterFor
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.single_row_search_name);
-            username = itemView.findViewById(R.id.single_row_search_username);
-            imageView = itemView.findViewById(R.id.single_row_search_image);
-            constraintLayout = itemView.findViewById(R.id.search_single_row_main_layout);
+            name = itemView.findViewById(R.id.search_cardview_name);
+            username = itemView.findViewById(R.id.search_cardview_username);
+            imageView = itemView.findViewById(R.id.search_cardview_image);
+            constraintLayout = itemView.findViewById(R.id.search_cardview_constraint);
 
         }
     }
