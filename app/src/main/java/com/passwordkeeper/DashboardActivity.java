@@ -49,7 +49,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        setTitle("Logins");
+        setTitle("Dashboard");
         String nameToUse = user.getEmail();
         entries = db.collection(nameToUse);
 

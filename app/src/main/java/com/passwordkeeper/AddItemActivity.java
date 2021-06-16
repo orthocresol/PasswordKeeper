@@ -10,14 +10,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,11 +41,11 @@ public class AddItemActivity extends AppCompatActivity {
 
 
         db = FirebaseFirestore.getInstance();
-        progressBar = findViewById(R.id.AddItemProgressBar);
-        et_name = findViewById(R.id.AddItemName);
-        et_username = findViewById(R.id.AddItemUsername);
-        et_password = findViewById(R.id.AddItemPassword);
-        et_url = findViewById(R.id.AddItemURL);
+        progressBar = findViewById(R.id.updateItemProgressBar);
+        et_name = findViewById(R.id.updateItemName);
+        et_username = findViewById(R.id.updateItemUsername);
+        et_password = findViewById(R.id.updateItemPassword);
+        et_url = findViewById(R.id.updateItemURL);
         progressBar.setVisibility(View.INVISIBLE);
     }
 

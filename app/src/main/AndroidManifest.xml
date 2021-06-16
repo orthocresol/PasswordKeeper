@@ -9,11 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordKeeper">
+        <activity android:name=".ForgotPasswordActivity" android:parentActivityName=".LoginActivity"/>
+        <activity
+            android:name=".UpdatePasswordActivity"
+            android:parentActivityName=".SettingsActivity" />
+        <activity
+            android:name=".UpdateItemActivity"
+            android:parentActivityName=".ViewItemActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".ViewItemActivity" />
-        <activity android:name=".GeneratorActivity"/>
-        <activity android:name=".AddItemActivity" android:parentActivityName=".DashboardActivity"/>
+        <activity android:name=".GeneratorActivity" />
+        <activity
+            android:name=".AddItemActivity"
+            android:parentActivityName=".DashboardActivity" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
@@ -23,9 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-
-
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

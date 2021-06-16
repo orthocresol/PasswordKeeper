@@ -57,6 +57,7 @@ public class GeneratorActivity extends AppCompatActivity {
         sw_small.setChecked(true);
         sw_cap.setChecked(true);
         sw_num.setChecked(true);
+        sw_ambiguous.setChecked(true);
 
         tv_char.setText(String.valueOf(minChar));
         tv_num.setText(String.valueOf(minNum));

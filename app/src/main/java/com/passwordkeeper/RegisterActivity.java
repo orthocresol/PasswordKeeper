@@ -36,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        setTitle("Registration");
+
         progressBar = findViewById(R.id.registerProgressbar);
         auth = FirebaseAuth.getInstance();
         btn_register = findViewById(R.id.registerRegisterButton);

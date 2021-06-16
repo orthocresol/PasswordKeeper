@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import org.jetbrains.annotations.NotNull;
 
 public class LoginActivity extends AppCompatActivity {
-    Button btn_login, btn_register;
+    Button btn_login, btn_register, btn_forgot;
     FirebaseAuth auth;
     EditText et_email, et_password;
     ProgressBar progressBar;
@@ -30,9 +30,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        setTitle("Login");
+
         auth = FirebaseAuth.getInstance();
         btn_login = findViewById(R.id.loginLogin);
         btn_register = findViewById(R.id.loginRegister);
+        btn_forgot = findViewById(R.id.loginForgot);
+
         et_email = findViewById(R.id.loginEmail);
         et_password = findViewById(R.id.loginPassword);
         progressBar = findViewById(R.id.loginProgressbar);
@@ -56,6 +60,11 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
+        });
+
+        btn_forgot.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
         });
 
     }

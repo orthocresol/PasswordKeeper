@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SettingsActivity extends AppCompatActivity {
     Button btn_logout;
+    Button btn_update;
     FirebaseAuth auth;
     BottomNavigationView bottomNavigationView;
     @Override
@@ -28,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         btn_logout = findViewById(R.id.settingsLogout);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
+        btn_update = findViewById(R.id.settingsUpdate);
         bottomNavigationView.setSelectedItemId(R.id.btm_nav_settings);
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +40,11 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
+        });
+
+        btn_update.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, UpdatePasswordActivity.class);
+            startActivity(intent);
         });
         setNavigationBar();
     }
