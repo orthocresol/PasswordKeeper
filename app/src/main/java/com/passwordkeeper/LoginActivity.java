@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
+
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,9 +25,11 @@ import com.google.firebase.auth.FirebaseUser;
 import org.jetbrains.annotations.NotNull;
 
 public class LoginActivity extends AppCompatActivity {
-    Button btn_login, btn_register, btn_forgot;
+    Button btn_login, btn_register;
+    TextView tv_forgot;
     FirebaseAuth auth;
-    EditText et_email, et_password;
+    TextInputEditText et_email, et_password;
+    TextInputLayout et_email_Text, et_password_Text;
     ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         btn_login = findViewById(R.id.loginLogin);
         btn_register = findViewById(R.id.loginRegister);
-        btn_forgot = findViewById(R.id.loginForgot);
+        tv_forgot = findViewById(R.id.loginForgot);
 
+        et_email_Text = findViewById(R.id.loginEmailText);
+        et_password_Text = findViewById(R.id.loginPasswordText);
         et_email = findViewById(R.id.loginEmail);
         et_password = findViewById(R.id.loginPassword);
         progressBar = findViewById(R.id.loginProgressbar);
@@ -47,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //login processing
-                progressBar.setVisibility(View.VISIBLE);
+
                 authenticateUser();
 
             }
@@ -62,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btn_forgot.setOnClickListener(v -> {
+        tv_forgot.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
             startActivity(intent);
         });
@@ -70,21 +78,44 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void authenticateUser() {
+
+        progressBar.setVisibility(View.VISIBLE);
         String email = et_email.getText().toString().trim();
-        String password = et_password.getText().toString().trim();
+        String password = et_password.getText().toString();
+
+        Boolean b1 = false, b2 = false, b3 = false;
 
         if(email.length() == 0){
-            et_email.setError("This field cannot be blank");
-            return;
+            et_email_Text.setError("This field cannot be blank");
+            b3 = true;
         }
+        else {
+            et_email_Text.setError(null);
+        }
+
+        if(!b3) {
+            if (email.length() < 8 || !checkForAtTheRate(email)) {
+                et_email_Text.setError("Please enter a valid email address");
+                b1 = true;
+            } else {
+                et_email_Text.setError(null);
+
+            }
+        }
+
 
         if(password.length() == 0){
-            et_password.setError("This field cannot be blank");
-            return;
+            et_password_Text.setError("This field cannot be blank");
+            b2 = true;
+        }
+        else {
+            et_password_Text.setError(null);
         }
 
-        if(email.length() < 10){
-            et_email.setError("Please enter a valid email address");
+
+
+        if(b1 || b2 || b3){
+            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
         //login
@@ -112,6 +143,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private boolean checkForAtTheRate(String email) {
+        for(int i = 0 ; i < email.length(); i++){
+            char ch = email.charAt(i);
+            if(ch == '@')
+                return true;
+        }
+        return false;
     }
 
     @Override

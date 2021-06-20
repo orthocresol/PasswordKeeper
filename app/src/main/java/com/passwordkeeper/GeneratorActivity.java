@@ -31,7 +31,7 @@ public class GeneratorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_generator);
+        setContentView(R.layout.activity_generator_relative);
 
         setTitle("Generator");
 

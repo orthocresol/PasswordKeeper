@@ -8,14 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +28,8 @@ public class RegisterActivity extends AppCompatActivity {
     Button btn_register, btn_login;
     FirebaseAuth auth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    EditText et_name_field, et_email_field, et_password_field;
+    TextInputLayout et_name_layout, et_email_layout, et_password_layout;
+    TextInputEditText et_name_field, et_email_field, et_password_field;
     ProgressBar progressBar;
 
     @Override
@@ -45,6 +46,9 @@ public class RegisterActivity extends AppCompatActivity {
         et_name_field = findViewById(R.id.registerName);
         et_email_field = findViewById(R.id.registerEmail);
         et_password_field = findViewById(R.id.registerPassword);
+        et_name_layout = findViewById(R.id.registerNameLayout);
+        et_email_layout = findViewById(R.id.registerEmailLayout);
+        et_password_layout = findViewById(R.id.registerPasswordLayout);
 
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -52,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // registering account
-                progressBar.setVisibility(View.VISIBLE);
+
                 createNewAccount();
             }
         });
@@ -65,6 +69,8 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 
     private void createNewAccount() {
@@ -72,30 +78,9 @@ public class RegisterActivity extends AppCompatActivity {
         String email = et_email_field.getText().toString().trim();
         String password = et_password_field.getText().toString().trim();
 
-        if(name.length() == 0){
-            et_name_field.setError("This field cannot be blank");
-            return;
-        }
+        if (checkForError(name, email, password)) return;
 
-        if(email.length() == 0){
-            et_email_field.setError("This field cannot be blank");
-            return;
-        }
-
-        if(password.length() == 0){
-            et_password_field.setError("This field cannot be blank");
-            return;
-        }
-
-        if(email.length() < 10){
-            et_email_field.setError("Please enter a valid email address");
-            return;
-        }
-
-        if(password.length() < 6){
-            et_password_field.setError("Password length must be greater than 5");
-            return;
-        }
+        progressBar.setVisibility(View.VISIBLE);
 
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -135,5 +120,66 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private boolean checkForError(String name, String email, String password) {
+        Boolean b1 = false, b2 = false, b3 = false, b4 = false, b5 = false;
+
+        if(name.length() == 0){
+            et_name_layout.setError("Name cannot be empty");
+            b1 = true;
+        }
+        else {
+            et_name_layout.setError(null);
+        }
+
+        if(email.length() == 0){
+            et_email_layout.setError("This field cannot be blank");
+            b2 = true;
+        }
+
+        else {
+            et_email_layout.setError(null);
+        }
+
+        if(password.length() == 0){
+            et_password_layout.setError("This field cannot be blank");
+            b3 = true;
+        }
+
+        else {
+            et_password_layout.setError(null);
+        }
+        if(!b2) {
+            if (email.length() < 10 || !checkForAtTheRate(email)) {
+                et_email_layout.setError("Please enter a valid email address");
+                b4 = true;
+            } else {
+                et_email_layout.setError(null);
+            }
+        }
+        if(!b3) {
+            if (password.length() < 6) {
+                et_password_layout.setError("Minimum length is 6");
+                b5 = true;
+            } else {
+                et_password_layout.setError(null);
+            }
+        }
+
+
+        if(b1 || b2 || b3 || b4 || b5){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkForAtTheRate(String email) {
+        for(int i = 0 ; i < email.length(); i++){
+            char ch = email.charAt(i);
+            if(ch == '@')
+                return true;
+        }
+        return false;
     }
 }

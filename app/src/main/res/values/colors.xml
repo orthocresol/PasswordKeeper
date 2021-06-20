@@ -10,10 +10,12 @@
     <color name="item_background">#F1F1EA</color>
     <color name="text_color_dashboard">#000000</color>
     <color name="_3items">#000</color>
+    <color name="green">#8BC34A</color>
     <!--<color name="colorPrimary">#757519</color> -->
 
     <color name="colorPrimary">#000000</color>
 
     <color name="colorSecondary">#FF86AEC1</color>
+    <dimen name="margin">60dp</dimen>
     <!--<color name="colorSecondary">#CCCCB2</color>-->
 </resources>

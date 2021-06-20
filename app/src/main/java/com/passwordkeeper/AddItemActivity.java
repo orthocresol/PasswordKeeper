@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,13 +27,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class AddItemActivity extends AppCompatActivity {
-    EditText et_name, et_username, et_password, et_url;
+    TextInputEditText et_name, et_username, et_password, et_url;
+    TextInputLayout et_name_layout, et_username_layout, et_password_layout, et_url_layout;
     ProgressBar progressBar;
     FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("item", "ioncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
@@ -41,11 +43,17 @@ public class AddItemActivity extends AppCompatActivity {
 
 
         db = FirebaseFirestore.getInstance();
-        progressBar = findViewById(R.id.updateItemProgressBar);
-        et_name = findViewById(R.id.updateItemName);
-        et_username = findViewById(R.id.updateItemUsername);
-        et_password = findViewById(R.id.updateItemPassword);
-        et_url = findViewById(R.id.updateItemURL);
+        progressBar = findViewById(R.id.addItemProgressbar);
+        et_name = findViewById(R.id.addItemName);
+        et_username = findViewById(R.id.addItemUserName);
+        et_password = findViewById(R.id.addItemPassword);
+        et_url = findViewById(R.id.addItemUrl);
+        et_name_layout = findViewById(R.id.addItemNameLayout);
+        et_username_layout = findViewById(R.id.addItemUserNameLayout);
+        et_password_layout = findViewById(R.id.addItemPasswordLayout);
+        et_url_layout = findViewById(R.id.addItemUrlLayout);
+
+
         progressBar.setVisibility(View.INVISIBLE);
     }
 

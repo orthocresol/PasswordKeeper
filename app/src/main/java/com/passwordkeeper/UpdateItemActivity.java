@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,7 +32,8 @@ import java.util.Objects;
 public class UpdateItemActivity extends AppCompatActivity {
 
 
-    EditText name, username, password, url;
+    TextInputEditText name, username, password, url;
+    TextInputLayout name_layout, username_layout, password_layout, url_layout;
     String sName, sUsername, sPassword, sUrl;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ProgressBar progressBar;
@@ -48,10 +51,16 @@ public class UpdateItemActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
 
         name = findViewById(R.id.updateItemName);
-        username = findViewById(R.id.updateItemUsername);
+        username = findViewById(R.id.updateItemUserName);
         password = findViewById(R.id.updateItemPassword);
-        url = findViewById(R.id.updateItemURL);
-        progressBar = findViewById(R.id.updateItemProgressBar);
+        url = findViewById(R.id.updateItemUrl);
+        progressBar = findViewById(R.id.updateItemProgressbar);
+
+        name_layout = findViewById(R.id.updateItemNameLayout);
+        username_layout = findViewById(R.id.updateItemUserNameLayout);
+        password_layout = findViewById(R.id.updateItemPasswordLayout);
+        url_layout = findViewById(R.id.updateItemUrlLayout);
+
 
         progressBar.setVisibility(View.INVISIBLE);
 
