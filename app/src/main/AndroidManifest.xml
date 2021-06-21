@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordKeeper">
-        <activity android:name=".ForgotPasswordActivity" android:parentActivityName=".LoginActivity"/>
+        <activity android:name=".UploadImageActivity"
+            android:parentActivityName=".SettingsActivity"/>
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:parentActivityName=".LoginActivity" />
         <activity
             android:name=".UpdatePasswordActivity"
             android:parentActivityName=".SettingsActivity" />

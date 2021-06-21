@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText et_email, et_password;
     TextInputLayout et_email_Text, et_password_Text;
     ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,15 +86,14 @@ public class LoginActivity extends AppCompatActivity {
 
         Boolean b1 = false, b2 = false, b3 = false;
 
-        if(email.length() == 0){
+        if (email.length() == 0) {
             et_email_Text.setError("This field cannot be blank");
             b3 = true;
-        }
-        else {
+        } else {
             et_email_Text.setError(null);
         }
 
-        if(!b3) {
+        if (!b3) {
             if (email.length() < 8 || !checkForAtTheRate(email)) {
                 et_email_Text.setError("Please enter a valid email address");
                 b1 = true;
@@ -104,17 +104,15 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        if(password.length() == 0){
+        if (password.length() == 0) {
             et_password_Text.setError("This field cannot be blank");
             b2 = true;
-        }
-        else {
+        } else {
             et_password_Text.setError(null);
         }
 
 
-
-        if(b1 || b2 || b3){
+        if (b1 || b2 || b3) {
             progressBar.setVisibility(View.INVISIBLE);
             return;
         }
@@ -123,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                             FirebaseUser user = auth.getCurrentUser();
@@ -134,8 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                             finish();
 
-                        }
-                        else {
+                        } else {
                             Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                             Log.w("Login", "Login Failed: ", task.getException());
                             progressBar.setVisibility(View.INVISIBLE);
@@ -146,9 +143,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean checkForAtTheRate(String email) {
-        for(int i = 0 ; i < email.length(); i++){
+        for (int i = 0; i < email.length(); i++) {
             char ch = email.charAt(i);
-            if(ch == '@')
+            if (ch == '@')
                 return true;
         }
         return false;
@@ -158,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = auth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
             startActivity(intent);
             finish();

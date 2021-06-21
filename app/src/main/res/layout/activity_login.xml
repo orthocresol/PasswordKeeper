@@ -52,7 +52,7 @@
         android:text="Log in"
         android:background="@drawable/button_background"
         android:layout_below="@id/loginPasswordText"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:layout_centerHorizontal="true"
         app:icon="@drawable/icon_login"/>
 
@@ -61,10 +61,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
-        android:layout_below="@id/loginLogin"
+        android:layout_below="@id/loginPasswordText"
         android:textSize="16dp"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
+        android:layout_alignRight="@+id/loginPasswordText"
         android:textColor="@color/teal_700"
         />
     <Button
@@ -74,9 +73,10 @@
         android:text="Create new Account"
         android:background="@drawable/button_background"
         app:backgroundTint="@color/green"
-        android:layout_below="@+id/loginForgot"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@+id/loginLogin"
+        android:layout_marginTop="45dp"
+        android:layout_centerHorizontal="true"
+        app:icon="@drawable/ic_how_to_reg"/>
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

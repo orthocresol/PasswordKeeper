@@ -11,6 +11,7 @@
     <color name="text_color_dashboard">#000000</color>
     <color name="_3items">#000</color>
     <color name="green">#8BC34A</color>
+    <color name="red">#F44336</color>
     <!--<color name="colorPrimary">#757519</color> -->
 
     <color name="colorPrimary">#000000</color>

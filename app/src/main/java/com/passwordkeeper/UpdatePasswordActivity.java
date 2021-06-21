@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -24,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import org.jetbrains.annotations.NotNull;
 
 public class UpdatePasswordActivity extends AppCompatActivity {
-    EditText et_old, et_new, et_confirm;
+    TextInputEditText et_old, et_new, et_confirm;
     Button btn_update;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     ProgressBar progressBar;

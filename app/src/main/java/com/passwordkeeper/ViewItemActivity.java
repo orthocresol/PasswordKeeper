@@ -3,6 +3,8 @@ package com.passwordkeeper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -33,6 +36,7 @@ public class ViewItemActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String sName, sUsername, sPassword, sUrl, sNote;
     String path;
+    ConstraintLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,7 @@ public class ViewItemActivity extends AppCompatActivity {
         logo = findViewById(R.id.viewItemImageView);
         btn_delete = findViewById(R.id.viewItemDelete);
         btn_edit = findViewById(R.id.viewItemEdit);
+        mainLayout = findViewById(R.id.viewItemMainLayout);
 
         setClickListener();
 
@@ -104,6 +109,7 @@ public class ViewItemActivity extends AppCompatActivity {
                         .setNegativeButton("Cancel", null)
                         .show();
                 Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button button_negative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -111,7 +117,7 @@ public class ViewItemActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Toast.makeText(ViewItemActivity.this, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ViewItemActivity.this, "Item deleted successfully", Toast.LENGTH_SHORT).show();
                                         finish();
                                     }
                                 })
@@ -121,6 +127,12 @@ public class ViewItemActivity extends AppCompatActivity {
                                         Toast.makeText(ViewItemActivity.this, "Deletion failed", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                    }
+                });
+                button_negative.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
             }
