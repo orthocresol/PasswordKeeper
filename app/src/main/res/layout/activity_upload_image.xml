@@ -16,6 +16,16 @@
         android:text="Choose File" />
 
     <Button
+        android:id="@+id/uploadImageDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/green"
+        android:text="Done"
+        android:layout_toRightOf="@+id/uploadImageUpload"
+        android:layout_alignTop="@+id/uploadImageUpload"
+        android:background="@drawable/button_background"
+        android:layout_marginLeft="20dp"/>
+    <Button
         android:id="@+id/uploadImageUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,8 +35,8 @@
         android:text="Upload" />
 
     <ProgressBar
+        android:layout_marginBottom="50dp"
         android:id="@+id/uploadImageProgressbar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/uploadImageUpload"/>

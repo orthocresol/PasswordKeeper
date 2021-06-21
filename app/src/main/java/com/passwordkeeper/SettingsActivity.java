@@ -11,13 +11,24 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
     FirebaseAuth auth;
     BottomNavigationView bottomNavigationView;
     TextView tv_display_name, tv_display_email, tv_verified;
+    ImageView iv_image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +57,36 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        final String[] link = new String[1];
+
+        String colRef = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        colRef = colRef + "picture";
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference entries = db.collection(colRef);
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("uploads/");
+        entries.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Toast.makeText(SettingsActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        for(QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
+                            UploadedImage uploadedImage = documentSnapshot.toObject(UploadedImage.class);
+                            Log.d("cir", "odnSuccess: " + uploadedImage.getUrl());
+
+                            Picasso.get()
+                                    .load(uploadedImage.getUrl())
+                                    .error(R.drawable.ic_person)
+                                    .into(iv_image);
+                            Picasso.get().setLoggingEnabled(true);
+                            break;
+
+                        }
+                    }
+                });
+
+
+
         FirebaseUser user;
         if((user = auth.getCurrentUser()) != null){
             if(!user.isEmailVerified()){
@@ -89,7 +131,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+
     private void initVariables() {
+        iv_image = findViewById(R.id.settingsPicture);
         auth = FirebaseAuth.getInstance();
         btn_logout = findViewById(R.id.settingsLogout);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
