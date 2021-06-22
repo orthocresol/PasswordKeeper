@@ -14,9 +14,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,14 +42,28 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         btn_submit.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
-            FirebaseAuth.getInstance().sendPasswordResetEmail(email.getText().toString().trim())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+            new FancyGifDialog.Builder(ForgotPasswordActivity.this)
+                    .setTitle("An email will be sent to your email address") // You can also send title like R.string.from_resources
+                    .setMessage("You will get an email in 5 - 10 minutes. Please check your mail box for further instruction") // or pass like R.string.description_from_resources
+                    .setNegativeBtnText("Cancel") // or pass it like android.R.string.cancel
+                    .setPositiveBtnBackground(R.color.colorPrimary) // or pass it like R.color.positiveButton
+                    .setPositiveBtnText("Send mail") // or pass it like android.R.string.ok
+                    .setNegativeBtnBackground(R.color.purple_700) // or pass it like R.color.negativeButton
+                    .setGifResource(R.drawable.gif_mail)   //Pass your Gif here
+                    .isCancellable(true)
+                    .OnPositiveClicked(new FancyGifDialogListener() {
                         @Override
-                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                progressBar.setVisibility(View.INVISIBLE);
-                                //Toast.makeText(ForgotPasswordActivity.this, "Email has been sent to your email address", Toast.LENGTH_SHORT).show();
-                                Snackbar.make(mainLayout, "Email has been sent", Snackbar.LENGTH_LONG)
+                        public void OnClick() {
+                            //
+                            FirebaseAuth.getInstance().sendPasswordResetEmail(email.getText().toString().trim())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                                //Toast.makeText(ForgotPasswordActivity.this, "Email has been sent to your email address", Toast.LENGTH_SHORT).show();
+                                /*Snackbar.make(mainLayout, "Email has been sent", Snackbar.LENGTH_LONG)
                                         .setAction("Close", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -54,21 +71,33 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                             }
                                         })
                                         .setActionTextColor(ContextCompat.getColor(ForgotPasswordActivity.this, R.color.colorSecondary))
-                                        .show();
-                            }
-                            else {
-                                progressBar.setVisibility(View.INVISIBLE);
-                                Toast.makeText(ForgotPasswordActivity.this, "Error happened", Toast.LENGTH_SHORT).show();
-                            }
+                                        .show();*/
+
+                                            }
+                                            else {
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                                Toast.makeText(ForgotPasswordActivity.this, "Error happened", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull @NotNull Exception e) {
+                                            progressBar.setVisibility(View.INVISIBLE);
+                                            Toast.makeText(ForgotPasswordActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener() {
+                    .OnNegativeClicked(new FancyGifDialogListener() {
                         @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
+                        public void OnClick() {
                             progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(ForgotPasswordActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    })
+                    .build();
+
+
         });
 
     }
