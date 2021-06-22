@@ -21,6 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -103,7 +105,45 @@ public class ViewItemActivity extends AppCompatActivity {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog dialog = new AlertDialog.Builder(ViewItemActivity.this)
+                new FancyGifDialog.Builder(ViewItemActivity.this)
+                        .setTitle("Do you really want to delete this item?") // You can also send title like R.string.from_resources
+                        .setMessage("There is no going back. It cannot be retrieved once deleted") // or pass like R.string.description_from_resources
+                        .setNegativeBtnText("Cancel") // or pass it like android.R.string.cancel
+                        .setPositiveBtnBackground(R.color.colorPrimary) // or pass it like R.color.positiveButton
+                        .setPositiveBtnText("Ok") // or pass it like android.R.string.ok
+                        .setNegativeBtnBackground(R.color.purple_700) // or pass it like R.color.negativeButton
+                        .setGifResource(R.drawable.gif_final_nice_delete)   //Pass your Gif here
+                        .isCancellable(true)
+                        .OnPositiveClicked(new FancyGifDialogListener() {
+                            @Override
+                            public void OnClick() {
+                                db.document(path).delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(ViewItemActivity.this, "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull @NotNull Exception e) {
+                                                Toast.makeText(ViewItemActivity.this, "Deletion failed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        })
+                        .OnNegativeClicked(new FancyGifDialogListener() {
+                            @Override
+                            public void OnClick() {
+                                //
+                            }
+                        })
+                        .build();
+
+
+
+                /*AlertDialog dialog = new AlertDialog.Builder(ViewItemActivity.this)
                         .setMessage("Do you really want to delete this item?")
                         .setPositiveButton("Yes", null)
                         .setNegativeButton("Cancel", null)
@@ -134,7 +174,7 @@ public class ViewItemActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
-                });
+                });*/
             }
         });
     }
