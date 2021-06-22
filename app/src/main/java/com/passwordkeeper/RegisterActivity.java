@@ -3,12 +3,16 @@ package com.passwordkeeper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -56,8 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // registering account
-
-                createNewAccount();
+                showDialogBox();
+                //createNewAccount();
             }
         });
 
@@ -69,7 +73,35 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    private void showDialogBox() {
+        Dialog dialog = new Dialog(RegisterActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.register_dialog_background));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        //dialog.getWindow().getAttributes().windowAnimations = R.style.Animation;
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.register_dialog);
+
+        CheckBox checkBox = dialog.findViewById(R.id.register_dialog_checkbox);
+        Button btn_yes = dialog.findViewById(R.id.register_dialog_yes);
+        Button btn_no = dialog.findViewById(R.id.register_dialog_no);
+
+        btn_yes.setOnClickListener(v -> {
+            if(checkBox.isChecked()){
+                dialog.dismiss();
+                createNewAccount();
+            }
+            else {
+                Toast.makeText(RegisterActivity.this, "Please tick the checkbox", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn_no.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.show();
 
     }
 
